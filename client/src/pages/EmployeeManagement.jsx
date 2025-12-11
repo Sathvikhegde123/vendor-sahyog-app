@@ -3,6 +3,7 @@ import axios from "axios";
 import PageHeader from "../components/PageHeader";
 import EmployeeTable from "../components/EmployeeTable";
 import EmployeeFormModal from "../components/EmployeeFormModal";
+import api from "../utils/api";
 
 export default function EmployeeManagement() {
     const [employees, setEmployees] = useState([]);
@@ -11,7 +12,7 @@ export default function EmployeeManagement() {
     const [search, setSearch] = useState("");
 
     const fetchEmployees = async () => {
-        const res = await axios.get("http://localhost:5000/api/employees");
+        const res = await api.get("/employees");
         setEmployees(res.data);
     };
 

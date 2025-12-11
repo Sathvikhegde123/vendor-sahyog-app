@@ -1,5 +1,9 @@
 import { Routes, Route } from "react-router-dom";
+
 import DashboardLayout from "./layouts/DashboardLayout";
+import ProtectedRoute from "./pages/ProtectedRoute";
+
+import VendorLogin from "./pages/VendorLogin";
 
 import Home from "./pages/Home";
 import RiskAssessment from "./pages/RiskAssessment";
@@ -14,7 +18,17 @@ import InternalAudit from "./pages/InternalAudit";
 export default function App() {
   return (
     <Routes>
-      <Route element={<DashboardLayout />}>
+      {/* ✅ Public Route */}
+      <Route path="/login" element={<VendorLogin />} />
+
+      {/* ✅ Protected Dashboard */}
+      <Route
+        element={
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
+      >
         <Route path="/" element={<Home />} />
         <Route path="/risk-assessment" element={<RiskAssessment />} />
         <Route path="/site-risk" element={<SiteRisk />} />

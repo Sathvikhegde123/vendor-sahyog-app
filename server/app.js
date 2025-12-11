@@ -1,31 +1,33 @@
-// server/app.js
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 import dbConnect from "./config/dbConnect.js";
-import cors from "cors";
 
-// route imports
-import vendorRoutes from "./routes/vendorRoutes.js";
+import vendorAuthRoutes from "./routes/vendorAuth.routes.js";
 import employeeRoutes from "./routes/employee.routes.js";
 
 dotenv.config();
 const app = express();
 
-// Middleware
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://localhost:5173"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  })
+);
+
+app.options("*", cors());
 app.use(express.json());
-app.use(cors());
 
-
-// Connect DB
 dbConnect();
 
-// Routes
-app.use("/api/vendors", vendorRoutes);
+app.use("/api/auth/vendor", vendorAuthRoutes);
 app.use("/api/employees", employeeRoutes);
 
-// Base route
-app.get("/", (req, res) => {
-  res.json({ message: "Vendor Sahyog Backend Running" });
-});
+app.get("/", (_, res) =>
+  res.json({ message: "Vendor Sahyog Backend Running" })
+);
 
 export default app;

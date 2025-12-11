@@ -12,10 +12,12 @@ import {
 
 const router = express.Router();
 
-router.post("/", createEmployee);
-router.get("/", getAllEmployees);
-router.put("/:id", updateEmployee);
-router.put("/:id/deactivate", deactivateEmployee);
+import auth from "../middleware/auth.js";
+
+router.post("/", auth, createEmployee);
+router.get("/", auth, getAllEmployees);
+router.put("/:id", auth, updateEmployee);
+router.put("/:id/deactivate", auth, deactivateEmployee);
 
 router.post("/:id/attendance", addAttendance);
 router.post("/:id/salary", addSalary);

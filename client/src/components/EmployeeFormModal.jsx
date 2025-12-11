@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import api from "../utils/api";
 
 export default function EmployeeFormModal({ employee, onClose, onSuccess }) {
     const [form, setForm] = useState({
@@ -11,12 +12,9 @@ export default function EmployeeFormModal({ employee, onClose, onSuccess }) {
 
     const submit = async () => {
         if (employee) {
-            await axios.put(
-                `http://localhost:5000/api/employees/${employee._id}`,
-                form
-            );
+            await api.put(`/employees/${employee._id}`, form);
         } else {
-            await axios.post("http://localhost:5000/api/employees", form);
+            await api.post("/employees", form);
         }
         onSuccess();
         onClose();

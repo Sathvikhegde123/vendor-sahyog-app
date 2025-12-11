@@ -1,14 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 import ConfirmDialog from "./ConfirmDialog";
+import api from "../utils/api";
 
 export default function EmployeeActions({ employee, onEdit, onRefresh }) {
     const [openConfirm, setOpenConfirm] = useState(false);
 
     const deactivate = async () => {
-        await axios.put(
-            `http://localhost:5000/api/employees/${employee._id}/deactivate`
-        );
+        await api.put(`/employees/${employee._id}/deactivate`);
         setOpenConfirm(false);
         onRefresh();
     };
