@@ -7,7 +7,9 @@ const KRISchema = new mongoose.Schema(
       ref: "Vendor",
       required: true,
     },
-
+    vendorCode: {
+  type: String, // "VEN-713027"
+   },
     inputMode: {
       type: String,
       enum: ["TEXT", "STRUCTURED"],

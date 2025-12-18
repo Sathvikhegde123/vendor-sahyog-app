@@ -1,12 +1,17 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+dotenv.config();
 import dbConnect from "./config/dbConnect.js";
 
 import vendorAuthRoutes from "./routes/vendorAuth.routes.js";
 import employeeRoutes from "./routes/employee.routes.js";
 
-dotenv.config();
+import kriRoutes from "./routes/kri.routes.js";
+
+
+
+
 const app = express();
 
 app.use(
@@ -26,8 +31,14 @@ dbConnect();
 app.use("/api/auth/vendor", vendorAuthRoutes);
 app.use("/api/employees", employeeRoutes);
 
+
+
+app.use("/api/kri", kriRoutes);
+console.log("GROQ KEY LOADED:", !!process.env.GROQ_API_KEY);
+
 app.get("/", (_, res) =>
   res.json({ message: "Vendor Sahyog Backend Running" })
+
 );
 
 export default app;
