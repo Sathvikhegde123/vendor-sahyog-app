@@ -8,18 +8,12 @@ const KRISchema = new mongoose.Schema(
       required: true,
     },
 
-    /* =========================
-       1️⃣ INPUT MODE
-       ========================= */
     inputMode: {
       type: String,
       enum: ["TEXT", "STRUCTURED"],
       required: true,
     },
 
-    /* =========================
-       2️⃣ FREE TEXT INPUT (OPTIONAL)
-       ========================= */
     rawTextInput: {
       type: String,
       required: function () {
@@ -27,9 +21,6 @@ const KRISchema = new mongoose.Schema(
       },
     },
 
-    /* =========================
-       3️⃣ STRUCTURED INPUT (OPTIONAL)
-       ========================= */
     structuredInput: {
       businessOverview: {
         industry: String,              // e.g. Retail, SaaS, Manufacturing
@@ -69,18 +60,11 @@ const KRISchema = new mongoose.Schema(
       },
     },
 
-    /* =========================
-       4️⃣ AI-EXTRACTED CONTEXT
-       (From rawTextInput)
-       ========================= */
     extractedContext: {
       type: Object, // normalized version of structuredInput
       default: {},
     },
 
-    /* =========================
-       5️⃣ AI-GENERATED RISKS
-       ========================= */
     risks: [
       {
         riskCategory: {
@@ -115,9 +99,6 @@ const KRISchema = new mongoose.Schema(
       },
     ],
 
-    /* =========================
-       6️⃣ META / AUDIT
-       ========================= */
     generatedByAI: {
       type: Boolean,
       default: true,
