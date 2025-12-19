@@ -8,6 +8,9 @@ import vendorAuthRoutes from "./routes/vendorAuth.routes.js";
 import employeeRoutes from "./routes/employee.routes.js";
 
 import kriRoutes from "./routes/kri.routes.js";
+import siteRiskRoutes from "./routes/siteRisk.routes.js";
+
+
 
 
 
@@ -34,6 +37,8 @@ app.use("/api/employees", employeeRoutes);
 
 
 app.use("/api/kri", kriRoutes);
+app.use("/api/site-risk", siteRiskRoutes);
+
 console.log("GROQ KEY LOADED:", !!process.env.GROQ_API_KEY);
 
 app.get("/", (_, res) =>
