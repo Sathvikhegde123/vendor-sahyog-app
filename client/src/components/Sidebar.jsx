@@ -16,7 +16,7 @@ export default function Sidebar() {
     return (
         <aside className="w-64 bg-gray-900 text-white">
             <div className="p-4 font-bold text-xl border-b border-gray-700">
-                RiskOps
+                Vendor Sahyog
             </div>
 
             <nav className="flex flex-col p-2 gap-1">
