@@ -1,10 +1,9 @@
 import express from "express";
-import auth from "../middleware/auth.js";
+import vendorAuth from "../middleware/auth.js";
 import { createKRI } from "../controllers/kri.controller.js";
 
 const router = express.Router();
 
-// VendorAdmin & Admin allowed
-router.post("/", auth, createKRI);
+router.post("/", vendorAuth, createKRI);
 
 export default router;

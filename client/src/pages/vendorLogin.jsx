@@ -4,14 +4,28 @@ import api from "../utils/api";
 export default function VendorLogin() {
     const [form, setForm] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const submit = async () => {
+        setError("");
+        setLoading(true);
+
         try {
             const res = await api.post("/auth/vendor/login", form);
+
+            // ✅ Store token
             localStorage.setItem("token", res.data.token);
-            window.location.href = "/employees";
+
+            // Optional: store vendor info
+            localStorage.setItem("vendor", JSON.stringify(res.data.vendor));
+
+            window.location.href = "/";
         } catch (err) {
-            setError("Invalid email or password");
+            setError(
+                err?.response?.data?.error || "Invalid email or password"
+            );
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -39,9 +53,10 @@ export default function VendorLogin() {
 
                 <button
                     onClick={submit}
-                    className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700"
+                    disabled={loading}
+                    className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 disabled:bg-gray-400"
                 >
-                    Login
+                    {loading ? "Logging in..." : "Login"}
                 </button>
             </div>
         </div>
