@@ -1,27 +1,27 @@
 import express from "express";
+import auth from "../middleware/auth.js";
 import {
-    createEmployee,
-    getAllEmployees,
-    updateEmployee,
-    deactivateEmployee,
-    addAttendance,
-    addSalary,
-    addPerformanceIssue,
-    assignShift,
+  createEmployee,
+  getAllEmployees,
+  updateEmployee,
+  deactivateEmployee,
+  addAttendance,
+  addSalary,
+  addPerformanceIssue,
+  assignShift,
 } from "../controllers/employee.controller.js";
 
 const router = express.Router();
 
-import auth from "../middleware/auth.js";
-
+// ALL routes MUST have auth
 router.post("/", auth, createEmployee);
 router.get("/", auth, getAllEmployees);
 router.put("/:id", auth, updateEmployee);
 router.put("/:id/deactivate", auth, deactivateEmployee);
 
-router.post("/:id/attendance", addAttendance);
-router.post("/:id/salary", addSalary);
-router.post("/:id/performance-issue", addPerformanceIssue);
-router.put("/:id/shift", assignShift);
+router.post("/:id/attendance", auth, addAttendance);
+router.post("/:id/salary", auth, addSalary);
+router.post("/:id/performance-issue", auth, addPerformanceIssue);
+router.put("/:id/shift", auth, assignShift);
 
 export default router;

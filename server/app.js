@@ -49,7 +49,6 @@ app.use("/api/kri", kriRoutes);
 app.use("/api/site-risk", siteRiskRoutes);
 app.use("/api/bcm-policy", bcmPolicyRoutes);
 // existing middlewares...
-app.use(express.json());
 
 // billing
 app.use("/api/billing", billingRoutes);
