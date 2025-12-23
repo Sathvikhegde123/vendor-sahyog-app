@@ -1,129 +1,122 @@
 import mongoose from "mongoose";
 
-const BusinessContinuitySchema = new mongoose.Schema(
-    {
-        vendorId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Vendor",
-            required: true,
-        },
+const BcmPolicySchema = new mongoose.Schema(
+  {
+    /* =====================
+       MULTI-TENANT CONTROL
+    ===================== */
 
-        /* =====================
-           CORE BCP CONTENT
-        ===================== */
-
-        documents: [
-            {
-                title: String,
-                type: String, // Policy, SOP, Playbook
-                fileUrl: String,
-            },
-        ],
-
-        workflows: [
-            {
-                name: String,
-                trigger: String, // Cyber Attack, Flood, Power Outage
-                steps: [String], // High-level steps (simplified)
-            },
-        ],
-
-        responseProcedures: [
-            {
-                scenario: String,
-                actions: [String],
-                escalationContacts: [String],
-            },
-        ],
-
-        /* =====================
-           ACTIVATION & RESPONSE
-        ===================== */
-
-        activations: [
-            {
-                incidentType: String,
-                activatedBy: String,
-                activatedAt: {
-                    type: Date,
-                    default: Date.now,
-                },
-                notificationStatus: {
-                    type: String,
-                    enum: ["PENDING", "SENT", "FAILED"],
-                },
-            },
-        ],
-
-        /* =====================
-           RECOVERY & REPORTING
-        ===================== */
-
-        recovery: [
-            {
-                incidentReference: String,
-                steps: [String],
-                status: {
-                    type: String,
-                    enum: ["IN_PROGRESS", "COMPLETED"],
-                },
-                recoveryTime: String,
-            },
-        ],
-
-        postIncidentReports: [
-            {
-                incidentSummary: String,
-                rootCause: String,
-                lessonsLearned: [String],
-                createdAt: {
-                    type: Date,
-                    default: Date.now,
-                },
-            },
-        ],
-
-        /* =====================
-           AI (GEMINI)
-        ===================== */
-
-        aiEnabled: {
-            type: Boolean,
-            default: true,
-        },
-
-        aiModelUsed: String,
-
-        aiGeneratedContent: [
-            {
-                type: {
-                    type: String,
-                    enum: ["PROCEDURE", "RECOVERY", "REPORT"],
-                },
-                incidentType: String,
-                content: Object, // flexible AI output
-                reviewed: {
-                    type: Boolean,
-                    default: false,
-                },
-                generatedAt: {
-                    type: Date,
-                    default: Date.now,
-                },
-            },
-        ],
-
-        /* =====================
-           META
-        ===================== */
-
-        createdBy: String,
-        lastReviewedAt: Date,
+    vendorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Vendor",
+      required: true,
     },
-    { timestamps: true }
+
+    vendorCode: {
+      type: String,
+    },
+
+    /* =====================
+       POLICY SOURCE
+    ===================== */
+
+    policySource: {
+      sourceType: {
+        type: String,
+        enum: ["UPLOAD", "PLAINTEXT"],
+        required: true,
+      },
+
+      filename: String,
+      fileType: String, // pdf / docx / txt
+
+      rawText: String, // extracted or pasted policy text
+    },
+
+    /* =====================
+       EXTRACTED CLAUSES
+    ===================== */
+
+    extractedClauses: [
+      {
+        clause: String, // ISO clause number (e.g. 5.3)
+        existingText: String,
+        requirementText: String, // ISO reference (optional)
+        questions: [String], // AI-generated clarification questions
+      },
+    ],
+
+    /* =====================
+       GAP ANALYSIS
+    ===================== */
+
+    gapAnalysis: {
+      totalClauses: Number,
+      gapsFound: Number,
+
+      summary: String,
+
+      details: [
+        {
+          clause: String,
+          requirement: String,
+          present: Boolean,
+          evidence: String,
+          gapSeverity: {
+            type: String,
+            enum: ["Low", "Medium", "High"],
+          },
+          recommendation: String,
+        },
+      ],
+    },
+
+    /* =====================
+       CLAUSE REFINEMENT
+    ===================== */
+
+    refinedClauses: [
+      {
+        clause: String,
+        newText: String, // improved version
+        regenerated: {
+          type: Boolean,
+          default: false,
+        },
+      },
+    ],
+
+    /* =====================
+       FULL POLICY RENEWAL
+    ===================== */
+
+    regeneratedPolicy: {
+      clauses: [
+        {
+          clause: String,
+          existingText: String,
+          newText: String,
+          improvementSuggestions: [String],
+        },
+      ],
+    },
+
+    /* =====================
+       META
+    ===================== */
+
+    versionNotes: String,
+
+    generatedByAI: {
+      type: Boolean,
+      default: true,
+    },
+
+    aiModelUsed: String,
+
+    processedBy: String, // user/admin
+  },
+  { timestamps: true }
 );
 
-export default mongoose.model(
-    "BusinessContinuity",
-    BusinessContinuitySchema
-);
+export default mongoose.model("BcmPolicy", BcmPolicySchema);
