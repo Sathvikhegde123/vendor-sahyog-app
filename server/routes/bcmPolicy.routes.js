@@ -1,6 +1,7 @@
 import express from "express";
 import multer from "multer";
 import auth from "../middleware/auth.js";
+import moduleAccess from "../middleware/moduleAccess.js";
 import { uploadAndAnalyzePolicy } from "../controllers/bcmPolicy.controller.js";
 
 const router = express.Router();
@@ -11,6 +12,7 @@ router.post(
   "/upload",
   auth,
   upload.single("policyFile"),
+   moduleAccess("BCM"),
   uploadAndAnalyzePolicy
 );
 

@@ -13,6 +13,8 @@ import kriRoutes from "./routes/kri.routes.js";
 import siteRiskRoutes from "./routes/siteRisk.routes.js";
 import bcmPolicyRoutes from "./routes/bcmPolicy.routes.js";
 
+import billingRoutes from "./routes/billing.routes.js";
+
 
 
 
@@ -46,6 +48,11 @@ app.use("/api/employees", employeeRoutes);
 app.use("/api/kri", kriRoutes);
 app.use("/api/site-risk", siteRiskRoutes);
 app.use("/api/bcm-policy", bcmPolicyRoutes);
+// existing middlewares...
+app.use(express.json());
+
+// billing
+app.use("/api/billing", billingRoutes);
 
 console.log("GROQ KEY LOADED:", !!process.env.GROQ_API_KEY);
 
