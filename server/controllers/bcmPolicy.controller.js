@@ -1,4 +1,4 @@
-import BcmPolicy from "../models/BCPModule.js";
+import BcmPolicy from "../models/BCMModule.js";
 import { extractTextFromFile } from "../utils/extractText.util.js";
 import { generateBcmPolicyInsights } from "../services/bcmPolicyAI.service.js";
 
