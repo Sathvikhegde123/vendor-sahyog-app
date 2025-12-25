@@ -15,6 +15,9 @@ import bcmPolicyRoutes from "./routes/bcmPolicy.routes.js";
 
 import billingRoutes from "./routes/billing.routes.js";
 
+import internalAuditRoutes from "./routes/internalAudit.routes.js";
+
+
 
 
 
@@ -52,6 +55,8 @@ app.use("/api/bcm-policy", bcmPolicyRoutes);
 
 // billing
 app.use("/api/billing", billingRoutes);
+
+app.use("/api/internal-audit", internalAuditRoutes);
 
 console.log("GROQ KEY LOADED:", !!process.env.GROQ_API_KEY);
 
