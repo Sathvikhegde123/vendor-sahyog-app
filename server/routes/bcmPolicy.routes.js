@@ -12,7 +12,7 @@ router.post(
   "/upload",
   auth,
   upload.single("policyFile"),
-   moduleAccess("BCM"),
+    moduleAccess("BCM"),
   uploadAndAnalyzePolicy
 );
 

@@ -24,13 +24,13 @@ export const createAudit = async (req, res) => {
     console.log("Finding Owners:", findingOwners);
 
     // Normalize & filter IDs
-   const employeeIds = Array.from(
-  new Set([
-    ...auditors,
-    auditOwner,
-    ...findings.map(f => f.owner)
-  ].filter(Boolean))
-);
+    const employeeIds = Array.from(
+      new Set([
+        ...auditors,
+        auditOwner,
+        ...findings.map(f => f.owner)
+      ].filter(Boolean))
+    );
 
     console.log("Final Employee IDs considered:", employeeIds);
 
@@ -58,7 +58,7 @@ export const createAudit = async (req, res) => {
 
     const audit = await InternalAudit.create({
       ...req.body,
-      vendorId
+      vendor: vendorId
     });
 
     console.log("🔥 Audit Created:", audit._id);
@@ -77,8 +77,9 @@ export const createAudit = async (req, res) => {
 export const getMyAudits = async (req, res) => {
   try {
     const audits = await InternalAudit.find({
-      vendorId: req.vendor._id
+      vendor: req.vendor._id
     }).sort({ createdAt: -1 });
+
 
     res.json(audits);
   } catch (err) {
@@ -95,7 +96,7 @@ export const getAuditById = async (req, res) => {
   try {
     const audit = await InternalAudit.findOne({
       _id: req.params.id,
-      vendorId: req.vendor._id
+      vendor: req.vendor._id
     });
 
     if (!audit) return res.status(404).json({ error: "Audit not found" });
@@ -136,10 +137,11 @@ export const updateAudit = async (req, res) => {
     }
 
     const audit = await InternalAudit.findOneAndUpdate(
-      { _id: req.params.id, vendorId: vendorId },
+      { _id: req.params.id, vendor: vendorId },
       req.body,
       { new: true }
     );
+
 
     if (!audit) return res.status(404).json({ error: "Audit not found" });
 
@@ -158,7 +160,7 @@ export const deleteAudit = async (req, res) => {
   try {
     const result = await InternalAudit.findOneAndDelete({
       _id: req.params.id,
-      vendorId: req.vendor._id
+      vendor: req.vendor._id
     });
 
     if (!result) return res.status(404).json({ error: "Audit not found" });
