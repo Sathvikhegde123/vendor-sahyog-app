@@ -3,7 +3,7 @@ import vendorAuth from "../middleware/auth.js";
 import {
   purchaseModule,
   getMyModules,
-} from "../controllers/billing.controller.js";
+} from "../controllers/moduleBilling.controller.js";
 
 const router = express.Router();
 

@@ -13,7 +13,7 @@ import kriRoutes from "./routes/kri.routes.js";
 import siteRiskRoutes from "./routes/siteRisk.routes.js";
 import bcmPolicyRoutes from "./routes/bcmPolicy.routes.js";
 
-import billingRoutes from "./routes/billing.routes.js";
+import billingRoutes from "./routes/moduleBilling.routes.js";
 
 import internalAuditRoutes from "./routes/internalAudit.routes.js";
 
