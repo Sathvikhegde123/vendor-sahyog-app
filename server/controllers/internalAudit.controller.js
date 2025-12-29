@@ -7,6 +7,8 @@ import Employee from "../models/Employee.js";
 // CREATE AUDIT
 //
 export const createAudit = async (req, res) => {
+  console.log("RAW BODY RECEIVED >>>", req.body);
+
   try {
     const vendorId = req.vendor._id;
 
