@@ -117,11 +117,13 @@ export const updateAudit = async (req, res) => {
     const vendorId = req.vendor._id;
     const { auditors = [], auditOwner, findings = [] } = req.body;
 
-    const employeeIds = [
-      ...auditors,
-      auditOwner,
-      ...findings.map(f => f.owner)
-    ].filter(Boolean);
+    const employeeIds = Array.from(
+      new Set([
+        ...auditors,
+        auditOwner,
+        ...findings.map(f => f.owner)
+      ].filter(id => mongoose.Types.ObjectId.isValid(id)))
+    );
 
     if (employeeIds.length > 0) {
       const validEmployees = await Employee.find({
@@ -202,7 +204,7 @@ export const addFinding = async (req, res) => {
 export const updateAuditStatus = async (req, res) => {
   try {
     const audit = await InternalAudit.findOneAndUpdate(
-      { _id: req.params.id, vendorId: req.vendor._id },
+      { vendor: req.vendor._id },
       { status: req.body.status },
       { new: true }
     );
