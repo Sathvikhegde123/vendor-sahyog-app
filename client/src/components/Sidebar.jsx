@@ -5,7 +5,7 @@ const links = [
     { name: "Risk Assessment (KRI)", path: "/risk-assessment" },
     { name: "Site Risk", path: "/site-risk" },
     { name: "Shopping Patterns", path: "/shopping-patterns" },
-    { name: "License Renewals", path: "/license-renewals" },
+    //{ name: "License Renewals", path: "/license-renewals" },
     { name: "Employees", path: "/employees" },
     { name: "Billing", path: "/billing" },
     { name: "BCP", path: "/bcp" },

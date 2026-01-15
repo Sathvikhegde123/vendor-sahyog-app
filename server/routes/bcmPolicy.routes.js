@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import auth from "../middleware/auth.js";
+import vendorAuth from "../middleware/auth.js";
 import moduleAccess from "../middleware/moduleAccess.js";
 import { uploadAndAnalyzePolicy } from "../controllers/bcmPolicy.controller.js";
 
@@ -10,9 +10,9 @@ const upload = multer({ dest: "uploads/" });
 // Upload OR text input
 router.post(
   "/upload",
-  auth,
+  vendorAuth,
   upload.single("policyFile"),
-    moduleAccess("BCM"),
+  moduleAccess("BCM"),
   uploadAndAnalyzePolicy
 );
 

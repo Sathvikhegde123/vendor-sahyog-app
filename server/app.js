@@ -18,6 +18,7 @@ import billingRoutes from "./routes/moduleBilling.routes.js";
 import internalAuditRoutes from "./routes/internalAudit.routes.js";
 
 import customerBillingRoutes from "./routes/customerBilling.routes.js";
+import shoppingPatternRoutes from "./routes/shoppingPattern.routes.js";
 
 
 
@@ -61,6 +62,7 @@ app.use("/api/billing", billingRoutes);
 app.use("/api/internal-audit", internalAuditRoutes);
 
 app.use("/api/customer-billing", customerBillingRoutes);
+app.use("/api/shopping-patterns", shoppingPatternRoutes);
 
 console.log("GROQ KEY LOADED:", !!process.env.GROQ_API_KEY);
 

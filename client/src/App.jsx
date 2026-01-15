@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import DashboardLayout from "./layouts/DashboardLayout";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
-import VendorLogin from "./pages/VendorLogin";
+import VendorLogin from "./pages/vendorLogin";
 
 import Home from "./pages/Home";
 import RiskAssessment from "./pages/RiskAssessment";
@@ -14,6 +14,7 @@ import EmployeeManagement from "./pages/EmployeeManagement";
 import Billing from "./pages/Billing";
 import BusinessContinuity from "./pages/BusinessContinuity";
 import InternalAudit from "./pages/InternalAudit";
+import ModulePurchase from "./pages/ModulePurchase";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
         }
       >
         <Route path="/" element={<Home />} />
+        <Route path="/purchase-modules" element={<ModulePurchase />} />
         <Route path="/risk-assessment" element={<RiskAssessment />} />
         <Route path="/site-risk" element={<SiteRisk />} />
         <Route path="/shopping-patterns" element={<ShoppingPatterns />} />

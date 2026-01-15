@@ -7,6 +7,7 @@ const ShoppingPatternSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Vendor",
       required: true,
+      index: true,
     },
 
     customerId: {
@@ -18,14 +19,7 @@ const ShoppingPatternSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: [
-        "Footwear",
-        "Clothing",
-        "Electronics",
-        "Groceries",
-        "Furniture",
-        "Other",
-      ],
+      // Removed strict enum to allow any category from billing data
     },
 
     location: {
@@ -56,6 +50,11 @@ const ShoppingPatternSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// Add indexes for better query performance
+ShoppingPatternSchema.index({ vendorId: 1, timeStamp: -1 });
+ShoppingPatternSchema.index({ vendorId: 1, category: 1 });
+ShoppingPatternSchema.index({ vendorId: 1, location: 1 });
 
 const ShoppingPattern = mongoose.model(
   "ShoppingPattern",

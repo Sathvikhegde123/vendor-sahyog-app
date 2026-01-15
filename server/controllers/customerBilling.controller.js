@@ -5,6 +5,14 @@ import CustomerBilling from "../models/customerBilling.js";
 //
 export const createCustomerBill = async (req, res) => {
   try {
+    // Email validation
+    if (req.body.customerEmail && req.body.customerEmail.trim() !== "") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(req.body.customerEmail)) {
+        return res.status(400).json({ error: "Invalid email format" });
+      }
+    }
+
     const bill = await CustomerBilling.create({
       ...req.body,
       vendorId: req.vendor._id,   // 🔐 tenant binding
@@ -55,6 +63,14 @@ export const getCustomerBillById = async (req, res) => {
 //
 export const updateCustomerBill = async (req, res) => {
   try {
+    // Email validation
+    if (req.body.customerEmail && req.body.customerEmail.trim() !== "") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(req.body.customerEmail)) {
+        return res.status(400).json({ error: "Invalid email format" });
+      }
+    }
+
     const bill = await CustomerBilling.findOneAndUpdate(
       { _id: req.params.id, vendorId: req.vendor._id },
       req.body,

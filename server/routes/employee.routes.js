@@ -1,5 +1,5 @@
 import express from "express";
-import auth from "../middleware/auth.js";
+import vendorAuth from "../middleware/auth.js";
 import {
   createEmployee,
   getAllEmployees,
@@ -13,15 +13,15 @@ import {
 
 const router = express.Router();
 
-// ALL routes MUST have auth
-router.post("/", auth, createEmployee);
-router.get("/", auth, getAllEmployees);
-router.put("/:id", auth, updateEmployee);
-router.put("/:id/deactivate", auth, deactivateEmployee);
+// ALL routes MUST have vendorAuth
+router.post("/", vendorAuth, createEmployee);
+router.get("/", vendorAuth, getAllEmployees);
+router.put("/:id", vendorAuth, updateEmployee);
+router.put("/:id/deactivate", vendorAuth, deactivateEmployee);
 
-router.post("/:id/attendance", auth, addAttendance);
-router.post("/:id/salary", auth, addSalary);
-router.post("/:id/performance-issue", auth, addPerformanceIssue);
-router.put("/:id/shift", auth, assignShift);
+router.post("/:id/attendance", vendorAuth, addAttendance);
+router.post("/:id/salary", vendorAuth, addSalary);
+router.post("/:id/performance-issue", vendorAuth, addPerformanceIssue);
+router.put("/:id/shift", vendorAuth, assignShift);
 
 export default router;

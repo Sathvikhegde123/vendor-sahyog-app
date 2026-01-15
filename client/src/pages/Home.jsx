@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import api from "../utils/api" // adjust path if needed
+import { Plus, ShoppingCart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import api from "../utils/api";
 
 export default function Home() {
     const [modules, setModules] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchModules = async () => {
@@ -31,9 +34,18 @@ export default function Home() {
     return (
         <div className="min-h-screen bg-slate-100 p-6">
             <div className="max-w-7xl mx-auto">
-                <h1 className="text-2xl font-semibold text-gray-800 mb-6">
-                    Purchased Modules
-                </h1>
+                <div className="flex items-center justify-between mb-6">
+                    <h1 className="text-2xl font-semibold text-gray-800">
+                        Purchased Modules
+                    </h1>
+                    <button
+                        onClick={() => navigate("/purchase-modules")}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                    >
+                        <Plus className="w-4 h-4" />
+                        Purchase Modules
+                    </button>
+                </div>
 
                 {modules.length === 0 ? (
                     <div className="bg-white p-8 rounded-xl shadow text-center text-gray-500">
@@ -63,13 +75,15 @@ export default function Home() {
                                 </div>
 
                                 {/* Pricing */}
-                                <div className="text-sm text-gray-700 mb-3">
-                                    <p className="font-medium">Pricing</p>
-                                    <p>
-                                        ₹{mod.pricing.amount} /{" "}
-                                        {mod.pricing.billingCycle}
-                                    </p>
-                                </div>
+                                {mod.pricing && (
+                                    <div className="text-sm text-gray-700 mb-3">
+                                        <p className="font-medium">Pricing</p>
+                                        <p>
+                                            ₹{mod.pricing.amount || 0} /{" "}
+                                            {mod.pricing.billingCycle || 'N/A'}
+                                        </p>
+                                    </div>
+                                )}
 
                                 {/* License */}
                                 <div className="text-sm text-gray-700 mb-3">
@@ -82,14 +96,18 @@ export default function Home() {
                                 </div>
 
                                 {/* Payment */}
-                                <div className="text-sm text-gray-700 mb-4">
-                                    <p className="font-medium">Payment</p>
-                                    <p>Status: {mod.payment.paymentStatus}</p>
-                                    <p>
-                                        Paid on{" "}
-                                        {new Date(mod.payment.paidAt).toLocaleDateString()}
-                                    </p>
-                                </div>
+                                {mod.payment && (
+                                    <div className="text-sm text-gray-700 mb-4">
+                                        <p className="font-medium">Payment</p>
+                                        <p>Status: {mod.payment.paymentStatus || 'N/A'}</p>
+                                        {mod.payment.paidAt && (
+                                            <p>
+                                                Paid on{" "}
+                                                {new Date(mod.payment.paidAt).toLocaleDateString()}
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
 
                                 {/* Footer */}
                                 <div className="mt-auto pt-4 border-t text-xs text-gray-500">

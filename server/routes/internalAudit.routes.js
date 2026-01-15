@@ -1,5 +1,5 @@
 import express from "express";
-import auth from "../middleware/auth.js";
+import vendorAuth from "../middleware/auth.js";
 import {
   createAudit,
   getMyAudits,
@@ -12,13 +12,13 @@ import {
 
 const router = express.Router();
 
-router.post("/", auth, createAudit);
-router.get("/", auth, getMyAudits);
-router.get("/:id", auth, getAuditById);
-router.put("/:id", auth, updateAudit);
-router.delete("/:id", auth, deleteAudit);
+router.post("/", vendorAuth, createAudit);
+router.get("/", vendorAuth, getMyAudits);
+router.get("/:id", vendorAuth, getAuditById);
+router.put("/:id", vendorAuth, updateAudit);
+router.delete("/:id", vendorAuth, deleteAudit);
 
-router.post("/:id/findings", auth, addFinding);
-router.put("/:id/status", auth, updateAuditStatus);
+router.post("/:id/findings", vendorAuth, addFinding);
+router.put("/:id/status", vendorAuth, updateAuditStatus);
 
 export default router;
