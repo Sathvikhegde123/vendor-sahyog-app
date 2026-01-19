@@ -10,6 +10,7 @@ import {
   addPerformanceIssue,
   assignShift,
 } from "../controllers/employee.controller.js";
+import moduleAccess from "../middleware/moduleAccess.js";
 
 const router = express.Router();
 

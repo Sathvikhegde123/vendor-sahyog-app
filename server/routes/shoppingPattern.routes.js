@@ -12,16 +12,18 @@ import {
   generateShoppingPatterns,
   getSavedPatterns,
 } from "../controllers/shoppingPattern.controller.js";
+import moduleAccess from "../middleware/moduleAccess.js";
 
 const router = express.Router();
 
 // Dashboard and analytics endpoints
-router.get("/dashboard", vendorAuth, getDashboardStats);
-router.get("/category-analysis", vendorAuth, getCategoryAnalysis);
-router.get("/peak-hours", vendorAuth, getPeakHoursAnalysis);
-router.get("/location-analysis", vendorAuth, getLocationAnalysis);
-router.get("/payment-method", vendorAuth, getPaymentMethodAnalysis);
-router.get("/purchase-channel", vendorAuth, getPurchaseChannelAnalysis);
+
+router.get("/dashboard", vendorAuth, moduleAccess("SHOPPING_PATTERNS"), getDashboardStats);
+router.get("/category-analysis", vendorAuth, moduleAccess("SHOPPING_PATTERNS"), getCategoryAnalysis);
+router.get("/peak-hours", vendorAuth, moduleAccess("SHOPPING_PATTERNS"), getPeakHoursAnalysis);
+router.get("/location-analysis", vendorAuth, moduleAccess("SHOPPING_PATTERNS"), getLocationAnalysis);
+router.get("/payment-method", vendorAuth, moduleAccess("SHOPPING_PATTERNS"), getPaymentMethodAnalysis);
+router.get("/purchase-channel", vendorAuth, moduleAccess("SHOPPING_PATTERNS"), getPurchaseChannelAnalysis);
 router.get("/time-trends", vendorAuth, getTimeTrends);
 router.get("/customer-behavior", vendorAuth, getCustomerBehaviorAnalysis);
 
