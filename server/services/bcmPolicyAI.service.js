@@ -8,7 +8,7 @@ export const generateBcmPolicyInsights = async (policyText) => {
   const groq = new Groq({
     apiKey: process.env.GROQ_API_KEY,
   });
-  // test
+
 const prompt = `
 You are an ISO 22301 BCM expert.
 
